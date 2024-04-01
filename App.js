@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from "react";
+import MainScreen from "./MainScreen";
+import * as Font from "expo-font";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const App = () => {
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      FarroBold: require("./assets/fonts/FarroBold.ttf"),
+      GurajadaRegular: require("./assets/fonts/GurajadaRegular.ttf")
+    });
+    setFontLoaded(true);
+  };
+
+  useEffect(() => {
+    loadFonts();
+  }, []);
+
+  return fontLoaded && <MainScreen />;
+};
+
+export default App;
